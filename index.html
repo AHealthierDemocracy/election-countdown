@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .timer-container {
+      background-color: #062d3e; /* Dark Navy card background */
+      border: 2px solid #083a51; /* Dark Navy accent border */
+      border-radius: 40px; /* Pill-shaped outer container */
+      padding: 28px 36px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+      width: 100%;
+      max-width: 540px;
+      box-sizing: border-box;
+    }
+
+    .timer-title {
+      font-size: 1.4rem; /* Slightly bigger header */
+      font-weight: 300; /* Lighter font weight */
+      margin-bottom: 20px;
+      color: #df3c26; /* Vot-ER Red */
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .timer-display {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .time-box {
+      background-color: #e6f5fc; /* Vot-ER Light Blue */
+      border: 2px solid #df3c26; /* Vot-ER Red Border */
+      border-radius: 50px; /* Pill-shaped time boxes */
+      padding: 16px 14px 12px 14px;
+      min-width: 75px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .time-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #083a51; /* Dark Navy text */
+      line-height: 1;
+    }
+
+    .time-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #df3c26; /* Vot-ER Red text */
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .expired-message {
+      display: none;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #df3c26;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="timer-container">
+    <div class="timer-title" id="timer-title">Election Day Countdown</div>
+    
+    <div class="timer-display" id="timer">
+      <div class="time-box">
+        <div class="time-number" id="days">00</div>
+        <div class="time-label">Days</div>
+      </div>
+      <div class="time-box">
+        <div class="time-number" id="hours">00</div>
+        <div class="time-label">Hours</div>
+      </div>
+      <div class="time-box">
+        <div class="time-number" id="minutes">00</div>
+        <div class="time-label">Mins</div>
+      </div>
+      <div class="time-box">
+        <div class="time-number" id="seconds">00</div>
+        <div class="time-label">Secs</div>
+      </div>
+    </div>
+
+    <div class="expired-message" id="expired-message">The event has started!</div>
+  </div>
+
+  <script>
+    // SET YOUR TARGET DATE AND TIME HERE
+    const targetDate = new Date("2026-11-03T00:00:00").getTime();
+
+    const countdown = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+      document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+      document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+      document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+
+      if (distance < 0) {
+        clearInterval(countdown);
+        document.getElementById("timer").style.display = "none";
+        document.getElementById("timer-title").style.display = "none";
+        document.getElementById("expired-message").style.display = "block";
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
